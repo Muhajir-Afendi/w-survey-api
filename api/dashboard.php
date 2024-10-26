@@ -23,7 +23,7 @@
         $fetch_modal = $modals->dashboard_modal();
         $stmt = $conn -> prepare($fetch_modal);
 
-        $userId = "account_72943"; //$GLOBALS['user_id'];
+        $userId = $GLOBALS['user_id'];
 
         // Filter Based On Parameters
         $stmt->bind_param("s", $userId);
