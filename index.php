@@ -14,10 +14,10 @@
     // IS USER SIGNED
     function is_user_signed() {
 
-        if (isset(getallheaders()['Token']) && getallheaders()['Token'] !== null && getallheaders()['Token'] !== "") {
+        if (isset(getallheaders()['token']) && getallheaders()['token'] !== null && getallheaders()['token'] !== "") {
       
             try {
-                $token = getallheaders()['Token'];
+                $token = getallheaders()['token'];
                 $key = "WadaniParty2024@TOekn";
                 $jwt_decode = JWT::decode($token, new Key($key, 'HS256'));
                 
