@@ -1,0 +1,5 @@
+RewriteEngine On
+########### Redirect to SSL HTTPS
+
+########## Redirect all routes to index.php except *student-profile-images
+RewriteRule ^ index.php [END]
