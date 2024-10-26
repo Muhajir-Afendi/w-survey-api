@@ -23,46 +23,61 @@
         // If Validation Is success
         if (gettype($validation) === "array") {
 
-			$name 	    = $validation["name"];
-            $phone 	    = $validation["phone"];
-			$gender 	= $validation["gender"];
-			$district 	= $validation["district"];
+            try {
 
-			$is_voting 	    = $validation["is_voting"] === yes ? true : false;
-			$voting_2024 	= $validation["voting_2024"];
-			$voted_2017 	= $validation["voted_2017"];
-			$reason_not_voting 	= $validation["reason_not_voting"];
+                $name 	    = $validation["name"];
+                $phone 	    = $validation["phone"];
+                $gender 	= $validation["gender"];
+                $district 	= $validation["district"];
 
-            $latitude = $validation["latitude"];
-            $longitude = $validation["longitude"];
+                $is_voting 	    = $validation["is_voting"] === "yes" ? true : false;
+                $voting_2024 	= $validation["voting_2024"];
+                $voted_2017 	= $validation["voted_2017"];
+                $reason_not_voting 	= $validation["reason_not_voting"];
 
-            // Current Time
-            $currentTime = date("Y-m-d H:i:s");
+                $latitude = $validation["latitude"];
+                $longitude = $validation["longitude"];
 
-            $userId = $GLOBALS['user_id'];
-            $INSERT = $modals->registeration_modal();
-            $stmt = $conn -> prepare($INSERT);
-            $stmt->bind_param("sssssssssssss", $name, $phone, $gender, $district, $is_voting, $userId, $latitude, $longitude, $voting_2024, $voted_2017, $reason_not_voting, $currentTime, $currentTime);
+                // Current Time
+                $currentTime = date("Y-m-d H:i:s");
 
-            if($stmt->execute()) {
-                $response['error'] = false;
-                $response['message'] = 'Saved Successfully';            
-            }
+                $userId = $GLOBALS['user_id'];
+                $INSERT = $modals->registeration_modal();
+                $stmt = $conn -> prepare($INSERT);
+                $stmt->bind_param("sssssssssssss", $name, $phone, $gender, $district, $is_voting, $userId, $latitude, $longitude, $voting_2024, $voted_2017, $reason_not_voting, $currentTime, $currentTime);
 
-            else {
+                if($stmt->execute()) {
+                    $response['error'] = false;
+                    $response['message'] = 'Saved Successfully';            
+                }
 
-                if(mysqli_errno($conn) === 1062) {
-                    $response['error'] = true;
-                    $response['message'] = 'This survey is already registered <br> Please Retry '; 
+                else {
+
+                    if(mysqli_errno($conn) === 1062) {
+                        $response['error'] = true;
+                        $response['message'] = 'This survey is already registered <br> Please Retry '; 
+                    }
+                    else {
+                        error_log(mysqli_error($conn));
+                        $response['error'] = true;
+                        $response['message'] = 'Please check your enteries and try again !!';
+                    }
+
+                }    
+
+            } catch(Exception $e) {
+                
+                $response['error'] = true;
+                
+                if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
+                    $response['message'] = 'This survey is already registered <br> Please Retry ';
                 }
                 else {
-                    error_log(mysqli_error($conn));
-                    $response['error'] = true;
-                    $response['message'] = 'Please check your enteries and try again !!';
+                    $response['message'] = "Error encountered Please try again!";            
                 }
-
-            }    
-
+                
+            }
+            
 		}
 
         else {
