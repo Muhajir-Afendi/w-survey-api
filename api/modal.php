@@ -20,6 +20,11 @@
             return "INSERT INTO `surveys`(`survey_name`, `survey_phone`, `survey_gender`, `survey_district`, `survey_isvoting`, `survey_staff`, `survey_latitude`, `survey_longitude`, `survey_vote2024`, `survey_vote2017`, `survey_reason`, `created_at`, `updated_at`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         }
 
+        // Dashboard
+        function dashboard_modal() {
+            return"SELECT COUNT(*) AS numberOfSurveys, DATE_FORMAT(created_at, '%d/%b') AS date FROM `surveys` WHERE survey_staff = ?  GROUP BY DATE_FORMAT(created_at, '%d-%m-%Y') , DATE_FORMAT(created_at, '%d/%b') ORDER BY DATE_FORMAT(created_at, '%d-%m-%Y') DESC ";
+        }
+
     }
 
 

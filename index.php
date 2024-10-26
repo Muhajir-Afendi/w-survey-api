@@ -101,6 +101,11 @@
                 require __DIR__ . '/api/survey.php';
                 break; 
 
+            // Dashboard
+            case '/dashboard' :
+                require __DIR__ . '/api/dashboard.php';
+                break; 
+
             // 404
             default:
                 http_response_code(404);
