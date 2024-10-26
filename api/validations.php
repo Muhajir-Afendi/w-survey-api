@@ -44,7 +44,7 @@
         if (empty($input)) { 
             return false; 
         }
-        else if(preg_match("/^[0-9+]{5,20}$/",$input)) {
+        else if(preg_match("/^[0-9+-]{5,20}$/",$input)) {
             return $input;
         }
         else {
