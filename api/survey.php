@@ -70,14 +70,14 @@
                 $response['error'] = true;
                 
                 if (strpos($e->getMessage(), 'Duplicate entry') !== false) {
-                    $response['message'] = 'This survey is already registered <br> Please Retry ';
+                    $response['message'] = 'This survey is already registered';
                 }
                 else {
                     $response['message'] = "Error encountered Please try again!";            
                 }
                 
             }
-            
+
 		}
 
         else {
