@@ -24,7 +24,9 @@
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Validations
-        $validation = $validator->signin_validations($_POST);
+		$inputs = json_decode(file_get_contents('php://input'), true);
+
+        $validation = $validator->signin_validations($inputs);
 
         // If Validation Is success
         if (gettype($validation) === "array") {

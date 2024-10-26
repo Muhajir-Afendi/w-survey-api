@@ -18,7 +18,10 @@
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Validations
-        $validation = $validator->add_survey_validations($_POST);
+		$inputs = json_decode(file_get_contents('php://input'), true);
+
+        // Validations
+        $validation = $validator->add_survey_validations($inputs);
 
         // If Validation Is success
         if (gettype($validation) === "array") {
